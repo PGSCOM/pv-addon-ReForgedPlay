@@ -28,6 +28,8 @@ repositories {
         }
     }
     maven("https://repo.plasmoverse.com/releases")
+    maven("https://maven.neoforged.net/")
+    maven("https://maven.minecraftforge.net/")
 }
 
 dependencies {
@@ -38,10 +40,12 @@ dependencies {
 
     implementation(libs.plasmovoice)
 
-    modImplementation(libs.fabricloader)
+    // Use NeoForge as the loader for 1.21.1 builds
+    modImplementation("net.minecraftforge:neoforge:${property("neoforge_version")}")
 
+    // NeoForge/Forge equivalents (where mods are available through Modrinth/Maven)
     modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
-    modImplementation("maven.modrinth:plasmo-voice:${property("deps.plasmo_voice")}")
+    modImplementation("maven.modrinth:plasmo-voice:${property("deps.plasmo_voice_neoforge")}")
     modImplementation("maven.modrinth:replaymod:${property("deps.replaymod")}")
 }
 
@@ -62,6 +66,17 @@ tasks {
                 "minecraft_dependency" to project.property("mod.minecraft_dependency"),
                 "pv_dependency" to libs.versions.plasmovoice.get(),
                 "replaymod_dependency" to "1.16.4-2.6.9" // todo: ???
+            ))
+        }
+
+        // Generate NeoForge metadata TOML from template placeholders
+        filesMatching("META-INF/neoforge.mods.toml") {
+            expand(mapOf(
+                "version" to version,
+                "neoforge_version" to project.property("neoforge_version"),
+                "minecraft_dependency" to project.property("mod.minecraft_dependency"),
+                "pv_dependency" to project.property("deps.plasmo_voice_neoforge"),
+                "replaymod_dependency" to project.property("deps.replaymod")
             ))
         }
     }

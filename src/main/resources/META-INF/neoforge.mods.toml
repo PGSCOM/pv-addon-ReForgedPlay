@@ -1,0 +1,37 @@
+modLoader = "neoforge"
+loaderVersion = "${neoforge_version}"
+license = "MIT"
+
+[[mods]]
+modId = "pv-addon-replaymod"
+version = "${version}"
+displayName = "pv-addon-replaymod"
+description = "A compatibility mod between Plasmo Voice and ReplayMod"
+
+authors = ["Max Henkel", "BreadLoaf", "Apehum"]
+
+[[dependencies.pv-addon-replaymod]]
+modId = "minecraft"
+mandatory = true
+versionRange = "${minecraft_dependency}"
+
+[[dependencies.pv-addon-replaymod]]
+modId = "replaymod"
+mandatory = false
+versionRange = "${replaymod_dependency}"
+
+[[dependencies.pv-addon-replaymod]]
+modId = "plasmovoice"
+mandatory = false
+versionRange = "${pv_dependency}"
+
+[[dependencies.pv-addon-replaymod]]
+modId = "neoforge"
+mandatory = true
+versionRange = "=${neoforge_version}"
+
+[contact]
+homepage = "https://github.com/plasmoapp/replay-voice-chat"
+sources = "https://github.com/plasmoapp/replay-voice-chat"
+
+icon = "assets/replayvoicechat/icon.png"
