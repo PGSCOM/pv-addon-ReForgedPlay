@@ -18,18 +18,34 @@ val minecraftVersion = stonecutter.current.version.substringBefore('-')
 
 base.archivesName.set("${rootProject.name}-${minecraftVersion}")
 
+loom {
+    // Enable NeoForge support in Architectury Loom
+    if (stonecutter.current.version.startsWith("1.21.1")) {
+        neoForge {
+        }
+    }
+}
+
 repositories {
     maven {
         name = "Modrinth"
         url = uri("https://api.modrinth.com/maven")
-
         content {
             includeGroup("maven.modrinth")
         }
     }
     maven("https://repo.plasmoverse.com/releases")
-    maven("https://maven.neoforged.net/")
+    maven("https://maven.neoforged.net/releases")
     maven("https://maven.minecraftforge.net/")
+    // CurseMaven for ReForgedPlay
+    maven {
+        name = "CurseMaven"
+        url = uri("https://cursemaven.com")
+        content {
+            includeGroup("curse.maven")
+        }
+    }
+    mavenCentral()
 }
 
 dependencies {
@@ -37,16 +53,27 @@ dependencies {
     mappings(loom.officialMojangMappings())
 
     annotationProcessor(libs.lombok)
+    compileOnly(libs.lombok)
 
     implementation(libs.plasmovoice)
 
     // Use NeoForge as the loader for 1.21.1 builds
     if (stonecutter.current.version.startsWith("1.21.1")) {
-        modImplementation("net.neoforged:neoforge:${property("neoforge_version")}")
-
-        // NeoForge/Forge equivalents (where mods are available through Modrinth/Maven)
-        modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
+        "neoForge"("net.neoforged:neoforge:${property("neoforge_version")}")
+        
+        // ReForgedPlay from CurseMaven (project ID: 1018692, file ID: 6942967 for 1.21.1)
+        modImplementation("curse.maven:reforgedplay-1018692:6942967")
+        
+        // Plasmo Voice NeoForge from Modrinth
         modImplementation("maven.modrinth:plasmo-voice:${property("deps.plasmo_voice_neoforge")}")
+        
+        // Apache Commons Exec for FFmpeg
+        implementation("org.apache.commons:commons-exec:1.4.0")
+    } else {
+        // Fabric setup for older versions
+        modImplementation(libs.fabricloader)
+        modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
+        modImplementation("maven.modrinth:plasmo-voice:${property("deps.plasmo_voice")}")
         modImplementation("maven.modrinth:replaymod:${property("deps.replaymod")}")
     }
 }

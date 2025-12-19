@@ -1,15 +1,14 @@
 package su.plo.replayvoice;
 
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
 
 @Mod("pv-addon-replaymod")
 public class ReplayVoiceNeoForge {
 
-    public ReplayVoiceNeoForge() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public ReplayVoiceNeoForge(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::onClientSetup);
     }
 

@@ -12,7 +12,6 @@ import com.replaymod.replaystudio.pathing.path.Path;
 import com.replaymod.replaystudio.pathing.path.Timeline;
 import com.replaymod.simplepathing.ReplayModSimplePathing;
 import io.netty.buffer.ByteBufUtil;
-import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
@@ -28,9 +27,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class ReplayInterface implements ClientModInitializer {
+public class ReplayInterface {
     public static Logger logger = LogManager.getLogger("ReplayInterface");
-    public static ReplayInterface INSTANCE;
+    public static ReplayInterface INSTANCE = new ReplayInterface();
     public boolean isInReplayEditor;
     @Nullable
     public ReplayHandler replayHandler;
@@ -45,7 +44,6 @@ public class ReplayInterface implements ClientModInitializer {
         }
     }
 
-    @Override
     public void onInitializeClient() {
         
     }

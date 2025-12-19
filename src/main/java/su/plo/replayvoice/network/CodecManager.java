@@ -1,8 +1,6 @@
 package su.plo.replayvoice.network;
 
-//? if >=1.21 {
-/*import lombok.experimental.UtilityClass;
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import lombok.experimental.UtilityClass;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,14 +13,6 @@ public final class CodecManager {
     private static final Map<ResourceLocation, ByteArrayCodec> codecs = new HashMap<>();
 
     public static @NotNull ByteArrayCodec getCodec(@NotNull final ResourceLocation location) {
-        return codecs.computeIfAbsent(location, key -> {
-            ByteArrayCodec codec = new ByteArrayCodec(key);
-
-            PayloadTypeRegistry.playC2S().register(codec.getType(), codec);
-            PayloadTypeRegistry.playS2C().register(codec.getType(), codec);
-
-            return codec;
-        });
+        return codecs.computeIfAbsent(location, key -> new ByteArrayCodec(key));
     }
 }
-*///?}

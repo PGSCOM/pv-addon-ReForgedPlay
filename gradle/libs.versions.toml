@@ -4,7 +4,7 @@ kotlin = "2.0.21"
 plasmovoice = "2.1.6"
 lombok = "1.18.30"
 fabric-loader = "0.17.3"
-fabric-loom = "1.11-SNAPSHOT"
+architectury-loom = "1.9-SNAPSHOT"
 buildconfig = "5.7.0"
 neoforge = "21.1.192"
 
@@ -12,8 +12,8 @@ neoforge = "21.1.192"
 plasmovoice = { module = "su.plo.voice.api:client", version.ref = "plasmovoice" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 fabricloader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
-neoforge = { module = "net.minecraftforge:neoforge", version.ref = "neoforge" }
+neoforge = { module = "net.neoforged:neoforge", version.ref = "neoforge" }
 
 [plugins]
-loom = { id = "fabric-loom", version.ref = "fabric-loom" }
+loom = { id = "dev.architectury.loom", version.ref = "architectury-loom" }
 buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }

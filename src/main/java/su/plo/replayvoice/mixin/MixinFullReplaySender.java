@@ -3,7 +3,7 @@ package su.plo.replayvoice.mixin;
 import com.replaymod.replay.FullReplaySender;
 import com.replaymod.replay.ReplaySender;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientboundCustomPayloadPacket;
+import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,11 +20,7 @@ public class MixinFullReplaySender {
         if (!(p instanceof ClientboundCustomPayloadPacket)) return;
 
         ClientboundCustomPayloadPacket packet = (ClientboundCustomPayloadPacket) p;
-        //? if >=1.21 {
-        /*ResourceLocation packetId = packet.payload().type().id();
-        *///?} else {
-        ResourceLocation packetId = packet.getIdentifier();
-        //?}
+        ResourceLocation packetId = packet.payload().type().id();
 
         if (!packetId.equals(ReplayVoiceAddon.SELF_AUDIO_PACKET) &&
                 !packetId.equals(ReplayVoiceAddon.SELF_AUDIO_INFO_PACKET) &&

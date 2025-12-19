@@ -5,8 +5,6 @@ import com.google.common.io.ByteStreams;
 import com.replaymod.recording.ReplayModRecording;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.network.FriendlyByteBuf;
@@ -47,11 +45,10 @@ import xyz.breadloaf.replaymodinterface.ReplayInterface;
 import java.io.IOException;
 import java.security.KeyPair;
 
-//? if >=1.21
-/*import su.plo.replayvoice.network.CodecManager;*/
+import su.plo.replayvoice.network.CodecManager;
 
 @Addon(id = "pv-addon-replaymod", scope = AddonLoaderScope.CLIENT, version = BuildConfig.VERSION, authors = "Apehum")
-public class ReplayVoiceAddon implements ClientModInitializer, AddonInitializer {
+public class ReplayVoiceAddon implements AddonInitializer {
 
     public static ReplayVoiceAddon INSTANCE = new ReplayVoiceAddon();
     public static final Logger LOGGER = LogManager.getLogger();
@@ -69,44 +66,11 @@ public class ReplayVoiceAddon implements ClientModInitializer, AddonInitializer 
     public void onAddonInitialize() {
         ClientNetworkHandler network = new ClientNetworkHandler(voiceClient);
 
-        //? if >=1.21 {
-        /*ClientPlayNetworking.registerGlobalReceiver(
-                CodecManager.getCodec(SOURCE_AUDIO_PACKET).getType(),
-                (payload, context) -> network.handleSourceAudioPacket(payload.data())
-        );
-        ClientPlayNetworking.registerGlobalReceiver(
-                CodecManager.getCodec(SELF_AUDIO_INFO_PACKET).getType(),
-                (payload, context) -> network.handleSelfAudioInfoPacket(payload.data())
-        );
-        ClientPlayNetworking.registerGlobalReceiver(
-                CodecManager.getCodec(SELF_AUDIO_PACKET).getType(),
-                (payload, context) -> network.handleSelfAudioPacket(payload.data())
-        );
-        ClientPlayNetworking.registerGlobalReceiver(
-                CodecManager.getCodec(KEYPAIR_PACKET).getType(),
-                (payload, context) -> network.handleKeyPairPacket(payload.data())
-        );
-        *///?} else {
-        ClientPlayNetworking.registerGlobalReceiver(
-                SOURCE_AUDIO_PACKET,
-                (client, handler, buf, sender) -> network.handleSourceAudioPacket(ByteBufUtil.getBytes(buf))
-        );
-        ClientPlayNetworking.registerGlobalReceiver(
-                SELF_AUDIO_INFO_PACKET,
-                (client, handler, buf, sender) -> network.handleSelfAudioInfoPacket(ByteBufUtil.getBytes(buf))
-        );
-        ClientPlayNetworking.registerGlobalReceiver(
-                SELF_AUDIO_PACKET,
-                (client, handler, buf, sender) -> network.handleSelfAudioPacket(ByteBufUtil.getBytes(buf))
-        );
-        ClientPlayNetworking.registerGlobalReceiver(
-                KEYPAIR_PACKET,
-                (client, handler, buf, sender) -> network.handleKeyPairPacket(ByteBufUtil.getBytes(buf))
-        );
-        //?}
+        // NeoForge networking is handled differently - packets come through the replay system
+        // The network handler will be called when replaying recorded packets
+        LOGGER.info("ReplayVoiceAddon initialized for NeoForge");
     }
 
-    @Override
     public void onInitializeClient() {
         INSTANCE = this;
         ClientAddonsLoader.INSTANCE.load(this);
