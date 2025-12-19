@@ -72,14 +72,16 @@ tasks {
         }
 
         // Generate NeoForge metadata TOML from template placeholders
-        filesMatching("META-INF/neoforge.mods.toml") {
-            expand(mapOf(
-                "version" to version,
-                "neoforge_version" to project.property("neoforge_version"),
-                "minecraft_dependency" to project.property("mod.minecraft_dependency"),
-                "pv_dependency" to project.property("deps.plasmo_voice_neoforge"),
-                "replaymod_dependency" to project.property("deps.replaymod")
-            ))
+        if (stonecutter.current.version.startsWith("1.21.1")) {
+            filesMatching("META-INF/neoforge.mods.toml") {
+                expand(mapOf(
+                    "version" to version,
+                    "neoforge_version" to project.property("neoforge_version"),
+                    "minecraft_dependency" to project.property("mod.minecraft_dependency"),
+                    "pv_dependency" to project.property("deps.plasmo_voice_neoforge"),
+                    "replaymod_dependency" to project.property("deps.replaymod")
+                ))
+            }
         }
     }
 
