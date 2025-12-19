@@ -41,12 +41,14 @@ dependencies {
     implementation(libs.plasmovoice)
 
     // Use NeoForge as the loader for 1.21.1 builds
-    modImplementation("net.minecraftforge:neoforge:${property("neoforge_version")}")
+    if (stonecutter.current.version.startsWith("1.21.1")) {
+        modImplementation("net.minecraftforge:neoforge:${property("neoforge_version")}")
 
-    // NeoForge/Forge equivalents (where mods are available through Modrinth/Maven)
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
-    modImplementation("maven.modrinth:plasmo-voice:${property("deps.plasmo_voice_neoforge")}")
-    modImplementation("maven.modrinth:replaymod:${property("deps.replaymod")}")
+        // NeoForge/Forge equivalents (where mods are available through Modrinth/Maven)
+        modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
+        modImplementation("maven.modrinth:plasmo-voice:${property("deps.plasmo_voice_neoforge")}")
+        modImplementation("maven.modrinth:replaymod:${property("deps.replaymod")}")
+    }
 }
 
 buildConfig {
