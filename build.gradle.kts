@@ -42,7 +42,7 @@ dependencies {
 
     // Use NeoForge as the loader for 1.21.1 builds
     if (stonecutter.current.version.startsWith("1.21.1")) {
-        modImplementation("net.minecraftforge:neoforge:${property("neoforge_version")}")
+        modImplementation("net.neoforged:neoforge:${property("neoforge_version")}")
 
         // NeoForge/Forge equivalents (where mods are available through Modrinth/Maven)
         modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
